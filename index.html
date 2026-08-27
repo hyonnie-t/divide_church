@@ -45,6 +45,7 @@
     border-radius:0 0 28px 28px;
     overflow:hidden;
   }
+
   .header:before,
   .header:after{
     content:"";
@@ -85,6 +86,7 @@
     font-weight:800;
     letter-spacing:-0.2px;
   }
+
   .header p{
     margin:0;
     font-size:14px;
@@ -347,6 +349,12 @@
     margin-top:6px;
   }
 
+  .example-note{
+    margin-top:8px;
+    color:var(--ink2);
+    font-size:13.5px;
+  }
+
   .toast{
     position:fixed;
     left:50%;
@@ -361,6 +369,7 @@
     pointer-events:none;
     transition:opacity .25s;
   }
+
   .toast.show{opacity:1;}
 
   .padlet-links{
@@ -380,6 +389,7 @@
     padding:20px;
     z-index:50;
   }
+
   .modal-overlay.show{display:flex;}
 
   .modal-box{
@@ -449,6 +459,7 @@
     font-size:12.5px;
     font-weight:700;
   }
+
   .divider:before,.divider:after{
     content:"";
     flex:1;
@@ -468,7 +479,6 @@
 
 <div class="wrap">
 
-  <!-- 화면 0 -->
   <div class="screen active" id="screen-login">
     <div class="card">
       <span class="chip">시작하기</span>
@@ -485,26 +495,44 @@
     </div>
   </div>
 
-  <!-- 화면 1 -->
   <div class="screen" id="screen-judge">
     <div class="card">
       <span class="chip">판단</span>
-      <h2>성상 숭배<button class="term-btn" data-term="성상 숭배">?</button>를 둘러싼 갈등에서, 너라면 어느 쪽에 서겠어?</h2>
-      <p class="sub">비잔티움 황제는 성상을 없애라고 명령했고, 로마 교황은 이에 강하게 반발했어. 당시 상황을 떠올리며 더 타당하다고 생각하는 쪽을 골라 보자.</p>
+      <h2>
+        성상 숭배<button class="term-btn" data-term="성상 숭배">?</button>를 둘러싼 갈등에서,
+        너라면 어느 쪽에 서겠어?
+      </h2>
+      <p class="sub">
+        비잔티움 제국<button class="term-btn" data-term="비잔티움 제국">?</button>의 황제는 성상을 없애라고 명령했고,
+        로마 교황<button class="term-btn" data-term="교황">?</button>은 이에 강하게 반발했어.
+        당시 상황을 떠올리며 더 타당하다고 생각하는 쪽을 골라 보자.
+      </p>
 
       <div class="stance-row">
-        <button class="stance-btn" id="btnSupport" data-v="교황">성상 숭배를 허용하자<br><span style="font-weight:400; font-size:12.5px;">(교황 쪽)</span></button>
-        <button class="stance-btn" id="btnOppose" data-v="황제">성상 숭배를 금지하자<br><span style="font-weight:400; font-size:12.5px;">(비잔티움 황제 쪽)</span></button>
+        <button class="stance-btn" id="btnSupport" data-v="교황">
+          성상 숭배를 허용하자<br>
+          <span style="font-weight:400; font-size:12.5px;">(교황 쪽)</span>
+        </button>
+        <button class="stance-btn" id="btnOppose" data-v="황제">
+          성상 숭배를 금지하자<br>
+          <span style="font-weight:400; font-size:12.5px;">(비잔티움 황제 쪽)</span>
+        </button>
       </div>
 
       <details class="hint">
         <summary>힌트 1 — 열어보기</summary>
-        <p>교과서에는 성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다고 나와 있어. 교황은 성상이 신앙을 알기 쉽게 전하는 데 필요하다고 본 거야.</p>
+        <p>
+          교과서에는 성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다고 나와 있어.
+          교황은 성상이 신앙을 쉽게 전하는 데 도움이 된다고 보았어.
+        </p>
       </details>
 
       <details class="hint">
         <summary>힌트 2 — 열어보기</summary>
-        <p>이 갈등은 종교 문제만은 아니었어. 비잔티움 황제는 교회를 통제하려 했고, 교황은 황제의 간섭에서 벗어나려 했지.</p>
+        <p>
+          이 갈등은 종교 문제만은 아니었어.
+          황제는 교회를 통제하려 했고, 교황은 황제의 간섭에서 벗어나려 했지.
+        </p>
       </details>
 
       <label for="reasonBox">이유를 근거 들어서 써봐 (최소 40자)</label>
@@ -515,7 +543,6 @@
     </div>
   </div>
 
-  <!-- 화면 2 -->
   <div class="screen" id="screen-result">
     <div class="card">
       <span class="chip">제출 완료</span>
@@ -523,31 +550,39 @@
       <div id="feedbackWrap"></div>
 
       <div class="final-note">
-        <strong>한 줄 해설</strong><br>
-        이 논쟁은 결국 1054년 동서 교회의 분열로 이어졌고, 서유럽은 로마 가톨릭, 동유럽은 그리스 정교로 나뉘었다.
+        <strong>배경 이해하기</strong><br>
+        이 논쟁은 결국 1054년 동서 교회의 분열로 이어졌고,
+        서유럽은 로마 가톨릭<button class="term-btn" data-term="로마 가톨릭">?</button>,
+        동유럽은 그리스 정교<button class="term-btn" data-term="그리스 정교">?</button>로 나뉘었다.
       </div>
     </div>
 
     <div class="card">
-      <span class="chip">비교</span>
-      <h3>교과서식 표현과 비교해 볼까?</h3>
-      <p class="sub">네가 쓴 글이 교과서의 설명과 어떻게 이어지는지 확인해 보자.</p>
+      <span class="chip">참고 예시</span>
+      <h3>이런 식으로도 표현할 수 있어</h3>
+      <p class="sub">
+        아래 문장은 정답이 아니라, 교과서 내용을 바탕으로 입장을 표현하는 예시야.
+        네가 쓴 글과 똑같을 필요는 없어.
+      </p>
 
       <div class="compare-row">
         <div class="compare-box support">
-          <div class="compare-label">교황 쪽</div>
+          <div class="compare-label">교황 쪽 예시</div>
           <div class="compare-text">“성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다.”</div>
         </div>
 
         <div class="compare-box oppose">
-          <div class="compare-label">비잔티움 황제 쪽</div>
+          <div class="compare-label">비잔티움 황제 쪽 예시</div>
           <div class="compare-text">“우상 숭배를 금지한다며 성상들을 파괴하라고 명령했다.”</div>
         </div>
       </div>
 
-      <div class="divider">최종 해설</div>
+      <div class="divider">생각해 볼 점</div>
       <p class="sub" style="margin-top:8px;">
-        진짜 원인은 종교 문제만이 아니라 황제와 교황의 주도권 다툼이었다.
+        교과서에서는 이 갈등의 배경에 종교 문제뿐 아니라 황제와 교황의 주도권 다툼도 있었다고 설명하고 있어.
+      </p>
+      <p class="example-note">
+        예시 문장을 그대로 따라 쓰기보다, 네가 고른 입장에 맞게 이유를 풀어서 쓰면 더 좋아.
       </p>
     </div>
 
@@ -585,7 +620,11 @@ const PADLET_BY_BAN = {
 };
 
 const TERMS = {
-  "성상 숭배": "성상은 예수, 성모 마리아, 성인들의 모습을 그리거나 새긴 것이야. 성상 숭배 논쟁은 이런 성상을 신앙생활에서 인정할지 둘러싸고 벌어진 갈등이야."
+  "성상 숭배": "성상은 예수, 성모 마리아, 성인들의 모습을 그리거나 새긴 것이야. 성상 숭배 논쟁은 이런 성상을 신앙생활에서 인정할지 둘러싸고 벌어진 갈등이야.",
+  "비잔티움 제국": "로마 제국이 동서로 나뉜 뒤 동로마 제국이 이어진 나라야. 수도는 콘스탄티노폴리스였고, 그리스 문화와 크리스트교 전통이 강했어.",
+  "교황": "서유럽 크리스트교 세계에서 가장 높은 지위를 가진 로마 교회의 지도자야.",
+  "그리스 정교": "1054년 동서 교회가 분열한 뒤, 동유럽과 비잔티움 지역에서 발전한 크리스트교 전통이야.",
+  "로마 가톨릭": "1054년 동서 교회가 분열한 뒤, 서유럽에서 교황을 중심으로 발전한 크리스트교 전통이야."
 };
 
 function showScreen(id){
@@ -602,23 +641,30 @@ function toast(msg){
 }
 
 /* 용어 모달 */
+function bindTermButtons(){
+  document.querySelectorAll(".term-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const label = btn.dataset.term;
+      if(TERMS[label]) openTermModal(label, TERMS[label]);
+    });
+  });
+}
+
 function openTermModal(label, def){
   document.getElementById("modalTitle").textContent = label;
   document.getElementById("modalDef").textContent = def;
   document.getElementById("modalOverlay").classList.add("show");
 }
-document.querySelectorAll(".term-btn").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    const label = btn.dataset.term;
-    if(TERMS[label]) openTermModal(label, TERMS[label]);
-  });
-});
+
 document.getElementById("modalCloseBtn").addEventListener("click", ()=>{
   document.getElementById("modalOverlay").classList.remove("show");
 });
+
 document.getElementById("modalOverlay").addEventListener("click", (e)=>{
   if(e.target.id === "modalOverlay") e.currentTarget.classList.remove("show");
 });
+
+bindTermButtons();
 
 /* 로그인 */
 const studentId = document.getElementById("studentId");
@@ -658,6 +704,7 @@ function selectStance(v, el){
   el.classList.add("selected", v === "교황" ? "support" : "oppose");
   checkJudge();
 }
+
 btnSupport.addEventListener("click", ()=>selectStance("교황", btnSupport));
 btnOppose.addEventListener("click", ()=>selectStance("황제", btnOppose));
 
