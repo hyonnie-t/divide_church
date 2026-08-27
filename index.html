@@ -6,182 +6,491 @@
 <title>갈라진 교회 — 성상 숭배를 둘러싼 선택</title>
 <style>
   :root{
-    --ink1:#2b2320;
-    --ink2:#5a4f49;
-    --paper:#faf6ee;
-    --card:#ffffff;
-    --line:#e9ddc9;
-    --gold:#b8863b;
-    --gold-dark:#96692a;
-    --red:#a4453a;
-    --blue:#3a6b8f;
-    --good:#3f7a5c;
+    --ink1:#2a2430;
+    --ink2:#5e5566;
+    --paper:#f7f2ea;
+    --card:#fffdf9;
+    --line:#e5d8c7;
+    --gold:#b38a3e;
+    --gold-dark:#8e6728;
+    --wine:#7c3f45;
+    --wine-soft:#f7ebed;
+    --blue:#476c8a;
+    --blue-soft:#edf3f7;
+    --good:#446b55;
+    --good-soft:#edf6f0;
+    --shadow:0 8px 22px rgba(60,45,30,.06);
   }
+
   *{box-sizing:border-box;}
+
   body{
     margin:0;
     font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    background:var(--paper);
+    background:
+      radial-gradient(circle at top, rgba(179,138,62,.08), transparent 26%),
+      linear-gradient(to bottom, #fbf7f0 0%, #f7f2ea 100%);
     color:var(--ink1);
     font-size:17px;
     line-height:1.6;
     -webkit-tap-highlight-color:transparent;
   }
+
   .header{
-    background:linear-gradient(120deg,#3a3128 0%, #5a4a36 100%);
-    color:#f5ead2;
-    padding:26px 20px 32px;
+    position:relative;
+    background:linear-gradient(135deg,#352d36 0%, #4f4050 42%, #6a563c 100%);
+    color:#f8efdc;
+    padding:28px 20px 34px;
     text-align:center;
-    border-radius:0 0 24px 24px;
+    border-radius:0 0 28px 28px;
+    overflow:hidden;
   }
-  .header .eyebrow{font-size:13px; letter-spacing:1px; opacity:.75; margin-bottom:6px;}
-  .header h1{margin:0 0 6px; font-size:21px; font-weight:800;}
-  .header p{margin:0; font-size:14px; opacity:.85; color:#f5ead2;}
-  .wrap{max-width:640px; margin:0 auto; padding:20px 16px 90px;}
+  .header:before,
+  .header:after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid rgba(255,240,210,.14);
+    border-radius:50%;
+    top:-60px;
+  }
+  .header:before{left:-40px;}
+  .header:after{right:-40px;}
+
+  .header .eyebrow{
+    font-size:12.5px;
+    letter-spacing:1.4px;
+    opacity:.78;
+    margin-bottom:8px;
+    text-transform:uppercase;
+  }
+
+  .header .symbol{
+    width:58px;
+    height:58px;
+    margin:0 auto 10px;
+    border-radius:50%;
+    border:1.8px solid rgba(248,239,220,.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    background:rgba(255,255,255,.05);
+  }
+
+  .header h1{
+    margin:0 0 6px;
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-0.2px;
+  }
+  .header p{
+    margin:0;
+    font-size:14px;
+    opacity:.9;
+    color:#f8efdc;
+  }
+
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:20px 16px 90px;
+  }
+
   .screen{display:none;}
   .screen.active{display:block; animation:fadeUp .35s ease;}
-  @keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
 
   .card{
     background:var(--card);
     border:1px solid var(--line);
-    border-radius:18px;
-    padding:20px 20px;
+    border-radius:20px;
+    padding:20px;
     margin-bottom:16px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.04);
+    box-shadow:var(--shadow);
+    position:relative;
   }
+
+  .card:before{
+    content:"";
+    position:absolute;
+    left:18px;
+    right:18px;
+    top:0;
+    height:3px;
+    border-radius:0 0 8px 8px;
+    background:linear-gradient(90deg, var(--gold) 0%, rgba(179,138,62,.15) 100%);
+  }
+
   .chip{
     display:inline-block;
-    background:#f4e9d2;
+    background:#f3e8d2;
     color:var(--gold-dark);
     font-size:12.5px;
     font-weight:700;
     padding:5px 12px;
-    border-radius:100px;
+    border-radius:999px;
     margin-bottom:10px;
+    border:1px solid #e8d6b1;
   }
-  h2{font-size:18.5px; margin:0 0 10px; font-weight:800;}
-  h3{font-size:16px; margin:16px 0 8px; font-weight:700;}
-  p{color:var(--ink1);}
+
+  h2{
+    font-size:18.5px;
+    margin:0 0 10px;
+    font-weight:800;
+    letter-spacing:-0.2px;
+  }
+
+  h3{
+    font-size:16px;
+    margin:16px 0 8px;
+    font-weight:800;
+    letter-spacing:-0.1px;
+  }
+
+  p{color:var(--ink1); margin:0 0 8px;}
   .sub{color:var(--ink2); font-size:14px;}
 
   .term-btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:20px; height:20px; margin-left:3px; border-radius:50%;
-    background:#fff8ea; border:1px solid var(--gold); color:var(--gold-dark);
-    font-size:12px; font-weight:800; cursor:pointer; vertical-align:super; line-height:1; padding:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:20px;
+    height:20px;
+    margin-left:3px;
+    border-radius:50%;
+    background:#fff8ea;
+    border:1px solid var(--gold);
+    color:var(--gold-dark);
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+    vertical-align:super;
+    line-height:1;
+    padding:0;
   }
 
-  label{display:block; font-weight:700; font-size:14.5px; margin:14px 0 6px;}
+  label{
+    display:block;
+    font-weight:700;
+    font-size:14.5px;
+    margin:14px 0 6px;
+  }
+
   input[type=text], input[type=tel]{
-    width:100%; padding:13px 15px; font-size:17px;
-    border:2px solid var(--line); border-radius:12px;
-    background:#fffdf7; min-height:46px;
+    width:100%;
+    padding:13px 15px;
+    font-size:17px;
+    border:2px solid var(--line);
+    border-radius:12px;
+    background:#fffdfa;
+    min-height:46px;
   }
-  input:focus{outline:none; border-color:var(--gold);}
+
+  input:focus, textarea:focus{
+    outline:none;
+    border-color:var(--gold);
+    background:#fffefb;
+  }
+
   textarea{
-    width:100%; min-height:120px; padding:14px 15px; font-size:16px;
-    border:2px solid var(--line); border-radius:12px;
-    background:#fffdf7; resize:vertical; font-family:inherit; line-height:1.55;
+    width:100%;
+    min-height:124px;
+    padding:14px 15px;
+    font-size:16px;
+    border:2px solid var(--line);
+    border-radius:12px;
+    background:#fffdfa;
+    resize:vertical;
+    font-family:inherit;
+    line-height:1.6;
   }
-  textarea:focus{outline:none; border-color:var(--gold);}
-  .count{text-align:right; font-size:12.5px; color:var(--ink2); margin-top:4px;}
+
+  .count{
+    text-align:right;
+    font-size:12.5px;
+    color:var(--ink2);
+    margin-top:4px;
+  }
 
   .btn{
-    display:block; width:100%; padding:15px; margin-top:14px;
-    border:none; border-radius:14px; font-size:16.5px; font-weight:800;
-    cursor:pointer; text-align:center; text-decoration:none;
+    display:block;
+    width:100%;
+    padding:15px;
+    margin-top:14px;
+    border:none;
+    border-radius:14px;
+    font-size:16.5px;
+    font-weight:800;
+    cursor:pointer;
+    text-align:center;
+    text-decoration:none;
+    transition:.18s ease;
   }
-  .btn-primary{background:var(--gold-dark); color:#fff;}
-  .btn-primary:disabled{background:#d9cdb0; color:#fff8; cursor:not-allowed;}
-  .btn-ghost{background:#fff; color:var(--gold-dark); border:2px solid var(--gold-dark);}
-  .btn-outline{background:#fff; color:var(--ink2); border:2px solid var(--line);}
 
-  .stance-row{display:flex; gap:10px; margin-top:6px;}
-  .stance-btn{
-    flex:1; padding:16px 8px; border-radius:14px; border:2px solid var(--line);
-    background:#fff; text-align:center; font-weight:800; font-size:16px; cursor:pointer;
-    color:var(--ink2);
+  .btn-primary{
+    background:linear-gradient(180deg, #9a722f 0%, #866022 100%);
+    color:#fff;
   }
-  .stance-btn.selected.support{border-color:var(--good); background:#eef8f2; color:var(--good);}
-  .stance-btn.selected.oppose{border-color:var(--red); background:#fbeeec; color:var(--red);}
+
+  .btn-primary:disabled{
+    background:#d9cdb0;
+    color:#fff8;
+    cursor:not-allowed;
+  }
+
+  .btn-ghost{
+    background:#fff;
+    color:var(--gold-dark);
+    border:2px solid var(--gold-dark);
+  }
+
+  .btn-outline{
+    background:#fff;
+    color:var(--ink2);
+    border:2px solid var(--line);
+  }
+
+  .stance-row{
+    display:flex;
+    gap:10px;
+    margin-top:6px;
+  }
+
+  .stance-btn{
+    flex:1;
+    padding:16px 8px;
+    border-radius:16px;
+    border:2px solid var(--line);
+    background:#fff;
+    text-align:center;
+    font-weight:800;
+    font-size:16px;
+    cursor:pointer;
+    color:var(--ink2);
+    transition:.18s ease;
+  }
+
+  .stance-btn.selected.support{
+    border-color:var(--good);
+    background:var(--good-soft);
+    color:var(--good);
+  }
+
+  .stance-btn.selected.oppose{
+    border-color:var(--wine);
+    background:var(--wine-soft);
+    color:var(--wine);
+  }
 
   details.hint{
-    background:#f4efe1; border:1px dashed #cbb98a; border-radius:12px;
-    padding:12px 14px; margin-top:10px; font-size:14.5px;
+    background:#f5efe4;
+    border:1px dashed #c9b388;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-top:10px;
+    font-size:14.5px;
   }
-  details.hint summary{font-weight:700; color:var(--gold-dark); cursor:pointer;}
-  details.hint p{margin:8px 0 0; color:var(--ink2);}
+
+  details.hint summary{
+    font-weight:700;
+    color:var(--gold-dark);
+    cursor:pointer;
+  }
+
+  details.hint p{
+    margin:8px 0 0;
+    color:var(--ink2);
+  }
 
   .feedback-box{
-    background:#eef4f8; border:1px solid #cfe0ea; border-radius:14px;
-    padding:16px; margin-top:16px; font-size:15.5px;
+    background:var(--blue-soft);
+    border:1px solid #cfe0ea;
+    border-radius:14px;
+    padding:16px;
+    margin-top:16px;
+    font-size:15.5px;
   }
-  .feedback-box .who{font-weight:800; color:var(--blue); font-size:13px; margin-bottom:6px;}
+
+  .feedback-box .who{
+    font-weight:800;
+    color:var(--blue);
+    font-size:13px;
+    margin-bottom:6px;
+  }
+
+  .final-note{
+    margin-top:12px;
+    background:#f8f3e8;
+    border:1px solid #e4d7be;
+    border-radius:12px;
+    padding:13px 14px;
+    font-size:14.5px;
+    color:var(--ink1);
+  }
+
+  .final-note strong{
+    color:var(--gold-dark);
+  }
 
   .final-text{
-    background:#fffdf7; border:1px solid var(--line); border-radius:12px;
-    padding:14px; font-size:15px; white-space:pre-wrap; margin-top:6px;
+    background:#fffdf7;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    font-size:15px;
+    white-space:pre-wrap;
+    margin-top:6px;
   }
+
   .toast{
-    position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
-    background:#2b2320; color:#fff; padding:10px 18px; border-radius:100px;
-    font-size:14px; opacity:0; pointer-events:none; transition:opacity .25s;
+    position:fixed;
+    left:50%;
+    bottom:24px;
+    transform:translateX(-50%);
+    background:#2b2320;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:100px;
+    font-size:14px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s;
   }
   .toast.show{opacity:1;}
-  .padlet-links{display:flex; flex-direction:column; gap:8px; margin-top:10px;}
+
+  .padlet-links{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:10px;
+  }
 
   .modal-overlay{
-    position:fixed; inset:0; background:rgba(43,35,32,0.55);
-    display:none; align-items:center; justify-content:center; padding:20px; z-index:50;
+    position:fixed;
+    inset:0;
+    background:rgba(43,35,32,0.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:50;
   }
   .modal-overlay.show{display:flex;}
+
   .modal-box{
-    background:#fff; border-radius:18px; padding:22px 20px; max-width:420px; width:100%;
+    background:#fff;
+    border-radius:18px;
+    padding:22px 20px;
+    max-width:420px;
+    width:100%;
     box-shadow:0 12px 30px rgba(0,0,0,.2);
   }
-  .modal-title{font-weight:800; font-size:17px; margin-bottom:8px; color:var(--gold-dark);}
-  .modal-def{font-size:15px; color:var(--ink1); line-height:1.6; margin-bottom:16px;}
 
-  .compare-row{display:flex; flex-direction:column; gap:10px; margin-top:10px;}
-  .compare-box{border-radius:12px; padding:13px 14px; font-size:14.5px; border:2px solid var(--line);}
-  .compare-box.support{border-color:var(--good); background:#eef8f2;}
-  .compare-box.oppose{border-color:var(--red); background:#fbeeec;}
-  .compare-label{font-weight:800; font-size:12.5px; margin-bottom:5px;}
+  .modal-title{
+    font-weight:800;
+    font-size:17px;
+    margin-bottom:8px;
+    color:var(--gold-dark);
+  }
+
+  .modal-def{
+    font-size:15px;
+    color:var(--ink1);
+    line-height:1.6;
+    margin-bottom:16px;
+  }
+
+  .compare-row{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:10px;
+  }
+
+  .compare-box{
+    border-radius:14px;
+    padding:13px 14px;
+    font-size:14.5px;
+    border:2px solid var(--line);
+    position:relative;
+  }
+
+  .compare-box.support{
+    border-color:var(--good);
+    background:var(--good-soft);
+  }
+
+  .compare-box.oppose{
+    border-color:var(--wine);
+    background:var(--wine-soft);
+  }
+
+  .compare-label{
+    font-weight:800;
+    font-size:12.5px;
+    margin-bottom:5px;
+  }
+
   .compare-box.support .compare-label{color:var(--good);}
-  .compare-box.oppose .compare-label{color:var(--red);}
+  .compare-box.oppose .compare-label{color:var(--wine);}
   .compare-text{color:var(--ink1);}
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:10px 0 2px;
+    color:var(--gold-dark);
+    font-size:12.5px;
+    font-weight:700;
+  }
+  .divider:before,.divider:after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:#dcc8a7;
+  }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="eyebrow">비잔티움 제국 · 동서 교회의 분열</div>
+  <div class="eyebrow">Byzantium · East and West Church</div>
+  <div class="symbol">✠</div>
   <h1>갈라진 교회</h1>
   <p>성상 숭배를 둘러싼 갈등, 너라면 교황과 황제 중 어느 쪽에 설까</p>
 </div>
 
 <div class="wrap">
 
-  <!-- 화면 0: 학번 입력 -->
+  <!-- 화면 0 -->
   <div class="screen active" id="screen-login">
     <div class="card">
       <span class="chip">시작하기</span>
       <h2>학번과 이름을 입력해줘</h2>
+      <p class="sub">수업 활동을 시작하기 전에 기본 정보를 먼저 입력하자.</p>
+
       <label>학번</label>
       <input type="tel" id="studentId" inputmode="numeric" placeholder="예: 20512 (2학년 5반 12번)">
+
       <label>이름</label>
       <input type="text" id="studentName" placeholder="이름">
+
       <button class="btn btn-primary" id="loginBtn" disabled>다음</button>
     </div>
   </div>
 
-  <!-- 화면 1: 판단 -->
+  <!-- 화면 1 -->
   <div class="screen" id="screen-judge">
     <div class="card">
       <span class="chip">판단</span>
       <h2>성상 숭배<button class="term-btn" data-term="성상 숭배">?</button>를 둘러싼 갈등에서, 너라면 어느 쪽에 서겠어?</h2>
-      <p class="sub">8세기, 비잔티움 황제는 우상 숭배를 금지한다며 성상을 없애라고 명령했어. 하지만 로마 교황은 선교와 교회 전통을 이유로 강하게 반발했지.</p>
+      <p class="sub">비잔티움 황제는 성상을 없애라고 명령했고, 로마 교황은 이에 강하게 반발했어. 당시 상황을 떠올리며 더 타당하다고 생각하는 쪽을 골라 보자.</p>
 
       <div class="stance-row">
         <button class="stance-btn" id="btnSupport" data-v="교황">성상 숭배를 허용하자<br><span style="font-weight:400; font-size:12.5px;">(교황 쪽)</span></button>
@@ -190,43 +499,56 @@
 
       <details class="hint">
         <summary>힌트 1 — 열어보기</summary>
-        <p>교과서에는 성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다고 나와 있어. 즉, 성상은 단순한 장식이 아니라 신앙을 쉽게 전하는 도구이기도 했어.</p>
+        <p>교과서에는 성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다고 나와 있어. 교황은 성상이 신앙을 알기 쉽게 전하는 데 필요하다고 본 거야.</p>
       </details>
+
       <details class="hint">
         <summary>힌트 2 — 열어보기</summary>
-        <p>하지만 갈등의 진짜 이유는 종교 문제만이 아니었어. 비잔티움 황제는 교회를 통제하려 했고, 로마 교황은 그 간섭에서 벗어나 독자적인 권위를 가지려 했지.</p>
+        <p>이 갈등은 종교 문제만은 아니었어. 비잔티움 황제는 교회를 통제하려 했고, 교황은 황제의 간섭에서 벗어나려 했지.</p>
       </details>
 
       <label for="reasonBox">이유를 근거 들어서 써봐 (최소 40자)</label>
-      <textarea id="reasonBox" placeholder="네가 고른 입장에 대해, 당시 상황을 근거로 써봐. 예: '나는 ___ 쪽이 더 타당하다고 생각한다. 왜냐하면 ___했기 때문이다.'"></textarea>
+      <textarea id="reasonBox" placeholder="예: 나는 교황 쪽이 더 타당하다고 생각한다. 왜냐하면 성상은 글을 모르는 사람들에게 신앙을 쉽게 전하는 데 도움이 되었기 때문이다."></textarea>
       <div class="count"><span id="charCount">0</span>자</div>
 
       <button class="btn btn-primary" id="submitBtn" disabled>제출하기</button>
     </div>
   </div>
 
-  <!-- 화면 2: 결과 -->
+  <!-- 화면 2 -->
   <div class="screen" id="screen-result">
     <div class="card">
       <span class="chip">제출 완료</span>
       <h2 id="resultGreeting">제출됐어</h2>
       <div id="feedbackWrap"></div>
+
+      <div class="final-note">
+        <strong>한 줄 해설</strong><br>
+        이 논쟁은 결국 1054년 동서 교회의 분열로 이어졌고, 서유럽은 로마 가톨릭, 동유럽은 그리스 정교로 나뉘었다.
+      </div>
     </div>
 
     <div class="card">
       <span class="chip">비교</span>
-      <h3>교과서 내용과 비교해 볼까?</h3>
-      <p class="sub">교과서에서는 성상 숭배 논쟁이 단순한 종교 문제를 넘어서, 황제와 교황의 권력 갈등으로 이어졌다고 설명하고 있어.</p>
+      <h3>교과서식 표현과 비교해 볼까?</h3>
+      <p class="sub">네가 쓴 글이 교과서의 설명과 어떻게 이어지는지 확인해 보자.</p>
+
       <div class="compare-row">
         <div class="compare-box support">
           <div class="compare-label">교황 쪽</div>
           <div class="compare-text">“성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다.”</div>
         </div>
+
         <div class="compare-box oppose">
           <div class="compare-label">비잔티움 황제 쪽</div>
           <div class="compare-text">“우상 숭배를 금지한다며 성상들을 파괴하라고 명령했다.”</div>
         </div>
       </div>
+
+      <div class="divider">최종 해설</div>
+      <p class="sub" style="margin-top:8px;">
+        진짜 원인은 종교 문제만이 아니라 황제와 교황의 주도권 다툼이었다.
+      </p>
     </div>
 
     <div class="card">
@@ -271,6 +593,7 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
   window.scrollTo({top:0, behavior:"smooth"});
 }
+
 function toast(msg){
   const t = document.getElementById("toast");
   t.textContent = msg;
@@ -342,6 +665,7 @@ reasonBox.addEventListener("input", ()=>{
   charCount.textContent = reasonBox.value.trim().length;
   checkJudge();
 });
+
 function checkJudge(){
   submitBtn.disabled = !(stance && reasonBox.value.trim().length >= 40);
 }
@@ -400,16 +724,18 @@ submitBtn.addEventListener("click", async ()=>{
       body: JSON.stringify(payload)
     });
     const json = await res.json();
+
     if(json && json.aiComment){
       feedbackWrap.innerHTML = `
         <div class="feedback-box">
           <div class="who">쌤 AI 피드백</div>
           <div>${json.aiComment.replace(/\n/g,"<br>")}</div>
-        </div>`;
+        </div>
+      `;
     } else {
-      feedbackWrap.innerHTML = `<p class="sub">기록은 저장됐어. (피드백은 이번엔 못 받아왔어)</p>`;
+      feedbackWrap.innerHTML = `<p class="sub">기록은 저장됐어. 피드백은 이번에는 불러오지 못했어.</p>`;
     }
-  }catch(err){
+  } catch(err){
     console.log("전송 실패:", err);
     feedbackWrap.innerHTML = `<p class="sub">기록 저장에 실패한 것 같아. 화면을 캡처해서 선생님께 보여줘.</p>`;
   }
