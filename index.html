@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>갈라진 교회 — 성상 숭배를 둘러싼 선택</title>
+<style>
+  :root{
+    --ink1:#2b2320;
+    --ink2:#5a4f49;
+    --paper:#faf6ee;
+    --card:#ffffff;
+    --line:#e9ddc9;
+    --gold:#b8863b;
+    --gold-dark:#96692a;
+    --red:#a4453a;
+    --blue:#3a6b8f;
+    --good:#3f7a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    background:var(--paper);
+    color:var(--ink1);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .header{
+    background:linear-gradient(120deg,#3a3128 0%, #5a4a36 100%);
+    color:#f5ead2;
+    padding:26px 20px 32px;
+    text-align:center;
+    border-radius:0 0 24px 24px;
+  }
+  .header .eyebrow{font-size:13px; letter-spacing:1px; opacity:.75; margin-bottom:6px;}
+  .header h1{margin:0 0 6px; font-size:21px; font-weight:800;}
+  .header p{margin:0; font-size:14px; opacity:.85; color:#f5ead2;}
+  .wrap{max-width:640px; margin:0 auto; padding:20px 16px 90px;}
+  .screen{display:none;}
+  .screen.active{display:block; animation:fadeUp .35s ease;}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px 20px;
+    margin-bottom:16px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  }
+  .chip{
+    display:inline-block;
+    background:#f4e9d2;
+    color:var(--gold-dark);
+    font-size:12.5px;
+    font-weight:700;
+    padding:5px 12px;
+    border-radius:100px;
+    margin-bottom:10px;
+  }
+  h2{font-size:18.5px; margin:0 0 10px; font-weight:800;}
+  h3{font-size:16px; margin:16px 0 8px; font-weight:700;}
+  p{color:var(--ink1);}
+  .sub{color:var(--ink2); font-size:14px;}
+
+  .term-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:20px; height:20px; margin-left:3px; border-radius:50%;
+    background:#fff8ea; border:1px solid var(--gold); color:var(--gold-dark);
+    font-size:12px; font-weight:800; cursor:pointer; vertical-align:super; line-height:1; padding:0;
+  }
+
+  label{display:block; font-weight:700; font-size:14.5px; margin:14px 0 6px;}
+  input[type=text], input[type=tel]{
+    width:100%; padding:13px 15px; font-size:17px;
+    border:2px solid var(--line); border-radius:12px;
+    background:#fffdf7; min-height:46px;
+  }
+  input:focus{outline:none; border-color:var(--gold);}
+  textarea{
+    width:100%; min-height:120px; padding:14px 15px; font-size:16px;
+    border:2px solid var(--line); border-radius:12px;
+    background:#fffdf7; resize:vertical; font-family:inherit; line-height:1.55;
+  }
+  textarea:focus{outline:none; border-color:var(--gold);}
+  .count{text-align:right; font-size:12.5px; color:var(--ink2); margin-top:4px;}
+
+  .btn{
+    display:block; width:100%; padding:15px; margin-top:14px;
+    border:none; border-radius:14px; font-size:16.5px; font-weight:800;
+    cursor:pointer; text-align:center; text-decoration:none;
+  }
+  .btn-primary{background:var(--gold-dark); color:#fff;}
+  .btn-primary:disabled{background:#d9cdb0; color:#fff8; cursor:not-allowed;}
+  .btn-ghost{background:#fff; color:var(--gold-dark); border:2px solid var(--gold-dark);}
+  .btn-outline{background:#fff; color:var(--ink2); border:2px solid var(--line);}
+
+  .stance-row{display:flex; gap:10px; margin-top:6px;}
+  .stance-btn{
+    flex:1; padding:16px 8px; border-radius:14px; border:2px solid var(--line);
+    background:#fff; text-align:center; font-weight:800; font-size:16px; cursor:pointer;
+    color:var(--ink2);
+  }
+  .stance-btn.selected.support{border-color:var(--good); background:#eef8f2; color:var(--good);}
+  .stance-btn.selected.oppose{border-color:var(--red); background:#fbeeec; color:var(--red);}
+
+  details.hint{
+    background:#f4efe1; border:1px dashed #cbb98a; border-radius:12px;
+    padding:12px 14px; margin-top:10px; font-size:14.5px;
+  }
+  details.hint summary{font-weight:700; color:var(--gold-dark); cursor:pointer;}
+  details.hint p{margin:8px 0 0; color:var(--ink2);}
+
+  .feedback-box{
+    background:#eef4f8; border:1px solid #cfe0ea; border-radius:14px;
+    padding:16px; margin-top:16px; font-size:15.5px;
+  }
+  .feedback-box .who{font-weight:800; color:var(--blue); font-size:13px; margin-bottom:6px;}
+
+  .final-text{
+    background:#fffdf7; border:1px solid var(--line); border-radius:12px;
+    padding:14px; font-size:15px; white-space:pre-wrap; margin-top:6px;
+  }
+  .toast{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+    background:#2b2320; color:#fff; padding:10px 18px; border-radius:100px;
+    font-size:14px; opacity:0; pointer-events:none; transition:opacity .25s;
+  }
+  .toast.show{opacity:1;}
+  .padlet-links{display:flex; flex-direction:column; gap:8px; margin-top:10px;}
+
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(43,35,32,0.55);
+    display:none; align-items:center; justify-content:center; padding:20px; z-index:50;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal-box{
+    background:#fff; border-radius:18px; padding:22px 20px; max-width:420px; width:100%;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+  }
+  .modal-title{font-weight:800; font-size:17px; margin-bottom:8px; color:var(--gold-dark);}
+  .modal-def{font-size:15px; color:var(--ink1); line-height:1.6; margin-bottom:16px;}
+
+  .compare-row{display:flex; flex-direction:column; gap:10px; margin-top:10px;}
+  .compare-box{border-radius:12px; padding:13px 14px; font-size:14.5px; border:2px solid var(--line);}
+  .compare-box.support{border-color:var(--good); background:#eef8f2;}
+  .compare-box.oppose{border-color:var(--red); background:#fbeeec;}
+  .compare-label{font-weight:800; font-size:12.5px; margin-bottom:5px;}
+  .compare-box.support .compare-label{color:var(--good);}
+  .compare-box.oppose .compare-label{color:var(--red);}
+  .compare-text{color:var(--ink1);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">비잔티움 제국 · 동서 교회의 분열</div>
+  <h1>갈라진 교회</h1>
+  <p>성상 숭배를 둘러싼 갈등, 너라면 교황과 황제 중 어느 쪽에 설까</p>
+</div>
+
+<div class="wrap">
+
+  <!-- 화면 0: 학번 입력 -->
+  <div class="screen active" id="screen-login">
+    <div class="card">
+      <span class="chip">시작하기</span>
+      <h2>학번과 이름을 입력해줘</h2>
+      <label>학번</label>
+      <input type="tel" id="studentId" inputmode="numeric" placeholder="예: 20512 (2학년 5반 12번)">
+      <label>이름</label>
+      <input type="text" id="studentName" placeholder="이름">
+      <button class="btn btn-primary" id="loginBtn" disabled>다음</button>
+    </div>
+  </div>
+
+  <!-- 화면 1: 판단 -->
+  <div class="screen" id="screen-judge">
+    <div class="card">
+      <span class="chip">판단</span>
+      <h2>성상 숭배<button class="term-btn" data-term="성상 숭배">?</button>를 둘러싼 갈등에서, 너라면 어느 쪽에 서겠어?</h2>
+      <p class="sub">8세기, 비잔티움 황제는 우상 숭배를 금지한다며 성상을 없애라고 명령했어. 하지만 로마 교황은 선교와 교회 전통을 이유로 강하게 반발했지.</p>
+
+      <div class="stance-row">
+        <button class="stance-btn" id="btnSupport" data-v="교황">성상 숭배를 허용하자<br><span style="font-weight:400; font-size:12.5px;">(교황 쪽)</span></button>
+        <button class="stance-btn" id="btnOppose" data-v="황제">성상 숭배를 금지하자<br><span style="font-weight:400; font-size:12.5px;">(비잔티움 황제 쪽)</span></button>
+      </div>
+
+      <details class="hint">
+        <summary>힌트 1 — 열어보기</summary>
+        <p>교과서에는 성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다고 나와 있어. 즉, 성상은 단순한 장식이 아니라 신앙을 쉽게 전하는 도구이기도 했어.</p>
+      </details>
+      <details class="hint">
+        <summary>힌트 2 — 열어보기</summary>
+        <p>하지만 갈등의 진짜 이유는 종교 문제만이 아니었어. 비잔티움 황제는 교회를 통제하려 했고, 로마 교황은 그 간섭에서 벗어나 독자적인 권위를 가지려 했지.</p>
+      </details>
+
+      <label for="reasonBox">이유를 근거 들어서 써봐 (최소 40자)</label>
+      <textarea id="reasonBox" placeholder="네가 고른 입장에 대해, 당시 상황을 근거로 써봐. 예: '나는 ___ 쪽이 더 타당하다고 생각한다. 왜냐하면 ___했기 때문이다.'"></textarea>
+      <div class="count"><span id="charCount">0</span>자</div>
+
+      <button class="btn btn-primary" id="submitBtn" disabled>제출하기</button>
+    </div>
+  </div>
+
+  <!-- 화면 2: 결과 -->
+  <div class="screen" id="screen-result">
+    <div class="card">
+      <span class="chip">제출 완료</span>
+      <h2 id="resultGreeting">제출됐어</h2>
+      <div id="feedbackWrap"></div>
+    </div>
+
+    <div class="card">
+      <span class="chip">비교</span>
+      <h3>교과서 내용과 비교해 볼까?</h3>
+      <p class="sub">교과서에서는 성상 숭배 논쟁이 단순한 종교 문제를 넘어서, 황제와 교황의 권력 갈등으로 이어졌다고 설명하고 있어.</p>
+      <div class="compare-row">
+        <div class="compare-box support">
+          <div class="compare-label">교황 쪽</div>
+          <div class="compare-text">“성상이 없으면 글을 모르는 게르만족에게 선교하기 어려웠다.”</div>
+        </div>
+        <div class="compare-box oppose">
+          <div class="compare-label">비잔티움 황제 쪽</div>
+          <div class="compare-text">“우상 숭배를 금지한다며 성상들을 파괴하라고 명령했다.”</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>이제 이 글을 반 패들렛에도 올려줘</h3>
+      <p class="sub">아래 내용을 복사해서, 네 반 패들렛에 새 게시물로 붙여넣으면 돼.</p>
+      <div class="final-text" id="finalText"></div>
+      <button class="btn btn-ghost" id="copyBtn">글 복사하기</button>
+      <div class="padlet-links" id="padletLinks"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-def" id="modalDef"></div>
+    <button class="btn btn-primary" id="modalCloseBtn">닫기</button>
+  </div>
+</div>
+
+<script>
+const CONFIG = {
+  SHEET_WEBAPP_URL: "https://script.google.com/macros/s/AKfycbyXSjCfWY_HiZFqW_OBR-FQDoIfF1z_STqyKWUI31MacHeY3u7hbirFSFDvW-5yuUHaJQ/exec",
+  GAME_NAME: "동서교회_성상숭배판단"
+};
+
+const PADLET_BY_BAN = {
+  5: "https://padlet.com/dy_sch03/2026-2-3-5-cewq8vec8p3ew2yn",
+  6: "https://padlet.com/dy_sch03/2026-2-3-6-2xngg3v8pstkvld9",
+  7: "https://padlet.com/dy_sch03/2026-2-3-7-8ssvnriy75f7xwxs",
+  8: "https://padlet.com/dy_sch03/2026-2-3-8-gsrz2i3ca863675l"
+};
+
+const TERMS = {
+  "성상 숭배": "성상은 예수, 성모 마리아, 성인들의 모습을 그리거나 새긴 것이야. 성상 숭배 논쟁은 이런 성상을 신앙생활에서 인정할지 둘러싸고 벌어진 갈등이야."
+};
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 1800);
+}
+
+/* 용어 모달 */
+function openTermModal(label, def){
+  document.getElementById("modalTitle").textContent = label;
+  document.getElementById("modalDef").textContent = def;
+  document.getElementById("modalOverlay").classList.add("show");
+}
+document.querySelectorAll(".term-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const label = btn.dataset.term;
+    if(TERMS[label]) openTermModal(label, TERMS[label]);
+  });
+});
+document.getElementById("modalCloseBtn").addEventListener("click", ()=>{
+  document.getElementById("modalOverlay").classList.remove("show");
+});
+document.getElementById("modalOverlay").addEventListener("click", (e)=>{
+  if(e.target.id === "modalOverlay") e.currentTarget.classList.remove("show");
+});
+
+/* 로그인 */
+const studentId = document.getElementById("studentId");
+const studentName = document.getElementById("studentName");
+const loginBtn = document.getElementById("loginBtn");
+
+(function autofillFromPortal(){
+  const params = new URLSearchParams(window.location.search);
+  const sid = params.get("sid");
+  const name = params.get("name");
+  if(sid) studentId.value = sid;
+  if(name) studentName.value = name;
+})();
+
+function checkLogin(){
+  const idOk = /^\d{5}$/.test(studentId.value.trim());
+  loginBtn.disabled = !(idOk && studentName.value.trim());
+}
+[studentId, studentName].forEach(el=>el.addEventListener("input", checkLogin));
+checkLogin();
+
+loginBtn.addEventListener("click", ()=>{
+  showScreen("screen-judge");
+});
+
+/* 판단 */
+let stance = "";
+const btnSupport = document.getElementById("btnSupport");
+const btnOppose = document.getElementById("btnOppose");
+const reasonBox = document.getElementById("reasonBox");
+const charCount = document.getElementById("charCount");
+const submitBtn = document.getElementById("submitBtn");
+
+function selectStance(v, el){
+  stance = v;
+  [btnSupport, btnOppose].forEach(b=>b.classList.remove("selected","support","oppose"));
+  el.classList.add("selected", v === "교황" ? "support" : "oppose");
+  checkJudge();
+}
+btnSupport.addEventListener("click", ()=>selectStance("교황", btnSupport));
+btnOppose.addEventListener("click", ()=>selectStance("황제", btnOppose));
+
+reasonBox.addEventListener("input", ()=>{
+  charCount.textContent = reasonBox.value.trim().length;
+  checkJudge();
+});
+function checkJudge(){
+  submitBtn.disabled = !(stance && reasonBox.value.trim().length >= 40);
+}
+
+/* 제출 */
+submitBtn.addEventListener("click", async ()=>{
+  submitBtn.disabled = true;
+  submitBtn.textContent = "제출 중...";
+
+  const reason = reasonBox.value.trim();
+  const name = studentName.value.trim();
+  const finalWriting = `[성상 숭배 논쟁에 대한 나의 입장: ${stance} 쪽]\n${reason}`;
+
+  document.getElementById("resultGreeting").textContent = `${name}, 제출 완료!`;
+  document.getElementById("finalText").textContent = finalWriting;
+
+  const banFinal = parseInt(studentId.value.trim().substring(1,3), 10);
+  const padletUrl = PADLET_BY_BAN[banFinal];
+  const padletWrap = document.getElementById("padletLinks");
+  padletWrap.innerHTML = "";
+
+  if(padletUrl){
+    const a = document.createElement("a");
+    a.href = padletUrl;
+    a.target = "_blank";
+    a.className = "btn btn-outline";
+    a.textContent = `${banFinal}반 패들렛 열기`;
+    padletWrap.appendChild(a);
+  } else {
+    const p = document.createElement("p");
+    p.className = "sub";
+    p.textContent = "반 패들렛 링크를 찾지 못했어. 선생님께 확인해줘.";
+    padletWrap.appendChild(p);
+  }
+
+  const payload = {
+    gameName: CONFIG.GAME_NAME,
+    studentId: studentId.value.trim(),
+    studentName: name,
+    choiceSummary: `성상 숭배 논쟁에 대한 입장: ${stance} 쪽`,
+    diffSummary: "",
+    reflection: reason,
+    choicesJson: JSON.stringify([{
+      q: "성상 숭배 논쟁에서 어느 쪽을 지지하는가",
+      choice: stance,
+      reason: reason
+    }])
+  };
+
+  const feedbackWrap = document.getElementById("feedbackWrap");
+  feedbackWrap.innerHTML = `<p class="sub">피드백을 받아오는 중...</p>`;
+
+  try{
+    const res = await fetch(CONFIG.SHEET_WEBAPP_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+    if(json && json.aiComment){
+      feedbackWrap.innerHTML = `
+        <div class="feedback-box">
+          <div class="who">쌤 AI 피드백</div>
+          <div>${json.aiComment.replace(/\n/g,"<br>")}</div>
+        </div>`;
+    } else {
+      feedbackWrap.innerHTML = `<p class="sub">기록은 저장됐어. (피드백은 이번엔 못 받아왔어)</p>`;
+    }
+  }catch(err){
+    console.log("전송 실패:", err);
+    feedbackWrap.innerHTML = `<p class="sub">기록 저장에 실패한 것 같아. 화면을 캡처해서 선생님께 보여줘.</p>`;
+  }
+
+  showScreen("screen-result");
+});
+
+/* 복사 */
+document.getElementById("copyBtn").addEventListener("click", async ()=>{
+  const text = document.getElementById("finalText").textContent;
+  try{
+    await navigator.clipboard.writeText(text);
+    toast("복사 완료! 패들렛에 붙여넣기 해줘");
+  }catch(err){
+    toast("복사에 실패했어. 길게 눌러서 직접 복사해줘");
+  }
+});
+</script>
+
+</body>
+</html>
