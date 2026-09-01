@@ -635,7 +635,7 @@
 
 <script>
 const CONFIG = {
-  SHEET_WEBAPP_URL: "https://script.google.com/macros/s/AKfycbyXSjCfWY_HiZFqW_OBR-FQDoIfFl1z_STqyKWUI31MacHeY3u7hbirFSFDvW-5yuUHaJQ/exec",
+  SHEET_WEBAPP_URL: "https://script.google.com/macros/s/AKfycbyXSjCfWY_HiZFqW_OBR-FQDoIfF1z_STqyKWUI31MacHeY3u7hbirFSFDvW-5yuUHaJQ/exec",
   GAME_NAME: "동서교회_성상숭배판단"
 };
 
@@ -753,6 +753,46 @@ submitBtn.addEventListener("click", async ()=>{
   const name = studentName.value.trim();
   const finalWriting = `[성상 숭배 논쟁에 대한 나의 입장: ${stance} 쪽]\n${reason}`;
 
+  const payload = {
+    gameName: CONFIG.GAME_NAME,
+    studentId: studentId.value.trim(),
+    studentName: name,
+    choiceSummary: `성상 숭배 논쟁에 대한 입장: ${stance} 쪽`,
+    diffSummary: "",
+    reflection: reason,
+    choicesJson: JSON.stringify([{
+      q: "성상 숭배 논쟁에서 어느 쪽을 지지하는가",
+      choice: stance,
+      reason: reason
+    }])
+  };
+
+  // 서버 저장이 실제로 확인되기 전까지는 결과 화면(복사하기 버튼)으로 넘어가지 않는다.
+  let json = null;
+  try{
+    const res = await fetch(CONFIG.SHEET_WEBAPP_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    if(!res.ok){
+      throw new Error(`서버 응답 오류 (status ${res.status})`);
+    }
+
+    json = await res.json();
+
+    if(!json || json.result !== "success"){
+      throw new Error((json && json.message) || "백엔드가 저장 실패를 반환함");
+    }
+  } catch(err){
+    console.log("전송 실패:", err);
+    submitBtn.disabled = false;
+    submitBtn.textContent = "다시 제출하기";
+    toast("기록 저장에 실패했어. 인터넷 연결을 확인하고 다시 눌러줘!");
+    return; // 저장이 확인 안 됐으니 결과 화면(복사하기 버튼)을 보여주지 않는다.
+  }
+
+  // 여기서부터는 서버에 기록이 저장됐다고 확인된 경우에만 실행된다.
   document.getElementById("resultGreeting").textContent = `${name}, 제출 완료!`;
   document.getElementById("finalText").textContent = finalWriting;
 
@@ -775,44 +815,20 @@ submitBtn.addEventListener("click", async ()=>{
     padletWrap.appendChild(p);
   }
 
-  const payload = {
-    gameName: CONFIG.GAME_NAME,
-    studentId: studentId.value.trim(),
-    studentName: name,
-    choiceSummary: `성상 숭배 논쟁에 대한 입장: ${stance} 쪽`,
-    diffSummary: "",
-    reflection: reason,
-    choicesJson: JSON.stringify([{
-      q: "성상 숭배 논쟁에서 어느 쪽을 지지하는가",
-      choice: stance,
-      reason: reason
-    }])
-  };
-
   const feedbackWrap = document.getElementById("feedbackWrap");
-  feedbackWrap.innerHTML = `<p class="sub">피드백을 받아오는 중...</p>`;
-
-  try{
-    const res = await fetch(CONFIG.SHEET_WEBAPP_URL, {
-      method: "POST",
-      body: JSON.stringify(payload)
-    });
-    const json = await res.json();
-
-    if(json && json.aiComment){
-      feedbackWrap.innerHTML = `
-        <div class="feedback-box">
-          <div class="who">쌤 AI 피드백</div>
-          <div>${json.aiComment.replace(/\n/g,"<br>")}</div>
-        </div>
-      `;
-    } else {
-      feedbackWrap.innerHTML = `<p class="sub">기록은 저장됐어. 피드백은 이번에는 불러오지 못했어.</p>`;
-    }
-  } catch(err){
-    console.log("전송 실패:", err);
-    feedbackWrap.innerHTML = `<p class="sub">기록 저장에 실패한 것 같아. 화면을 캡처해서 선생님께 보여줘.</p>`;
+  if(json.aiComment){
+    feedbackWrap.innerHTML = `
+      <div class="feedback-box">
+        <div class="who">쌤 AI 피드백</div>
+        <div>${json.aiComment.replace(/\n/g,"<br>")}</div>
+      </div>
+    `;
+  } else {
+    feedbackWrap.innerHTML = `<p class="sub">기록은 저장됐어. 피드백은 이번에는 불러오지 못했어.</p>`;
   }
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = "제출하기";
 
   showScreen("screen-result");
 });
